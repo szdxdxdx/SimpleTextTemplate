@@ -135,12 +135,11 @@ public class TextTemplate {
 
         List<Part> analyze(String paramBegin, String paramEnd) {
 
-            if (template   == null || template  .isEmpty() ||
-                paramBegin == null || paramBegin.isEmpty() ||
-                paramEnd   == null || paramEnd  .isEmpty()
-            ) {
+            if (template == null || template.isEmpty())
+                return List.of(new Part(Type.TEXT, ""));
+
+            if (paramBegin == null || paramBegin.isEmpty() || paramEnd == null || paramEnd.isEmpty())
                 return List.of(new Part(Type.TEXT, template));
-            }
 
             List<Part> result = new ArrayList<>();
 

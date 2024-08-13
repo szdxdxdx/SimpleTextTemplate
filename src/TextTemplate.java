@@ -54,14 +54,14 @@ public class TextTemplate {
      * <p>  渲染模板，根据提供的参数映射替换模板中的占位参数，并返回生成的文本
      * <p>  以键值对的形式提供参数，键是占位参数的名称，值是要替换成的内容
      * <br> 如果提供的参数有缺失，则该占位参数会被替换成空文本
-     * @param params 参数
+     * @param args 参数
      * */
-    public String render(Map<String, Object> params) {
+    public String render(Map<String, Object> args) {
         StringBuilder result = new StringBuilder(256);
         for (Part part : parts) {
             switch (part.type) {
                 case TEXT  -> result.append(part.content);
-                case PARAM -> result.append(params.getOrDefault(part.content, ""));
+                case PARAM -> result.append(args.getOrDefault(part.content, ""));
             }
         }
         return result.toString();
@@ -72,15 +72,15 @@ public class TextTemplate {
      * <p>  以变长参数列表的形式提供参数，列表中的元素会按位置依次替换模板中的占位参数
      * <br> 如果提供的参数数量不足，则剩余占位参数会被替换成空文本
      * <br> 如果提供的参数数量过多，则忽略多出的那部分参数
-     * @param params 参数
+     * @param args 参数
      * */
-    public String render(Object ...params) {
+    public String render(Object ...args) {
         int i = 0;
         StringBuilder result = new StringBuilder(256);
         for (Part part : parts) {
             switch (part.type) {
                 case TEXT  -> result.append(part.content);
-                case PARAM -> result.append( (i < params.length) ? params[i++] : "" );
+                case PARAM -> result.append( (i < args.length) ? args[i++] : "" );
             }
         }
         return result.toString();
